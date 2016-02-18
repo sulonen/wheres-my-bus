@@ -1,0 +1,24 @@
+{
+  "name": "wheresmybus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kyleschnirring/wheres-my-bus.git"
+  },
+  "author": "Kyle Schnirring <kyleschnirring@gmail.com> (http://noticedev.io)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kyleschnirring/wheres-my-bus/issues"
+  },
+  "homepage": "https://github.com/kyleschnirring/wheres-my-bus#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "express-request-proxy": "^1.1.0"
+  }
+}

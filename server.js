@@ -23,4 +23,3 @@ app.get('*', function(request, response) {
 app.listen(port, function() {
   console.log('Server started on port ' + port + '!');
 });
-Status API Training Shop Blog About Pricing
