@@ -1,22 +1,27 @@
 var requestProxy = require('express-request-proxy'),
+  superagent = require('superagent'),
   express = require('express'),
   port = process.env.PORT || 3000,
-  api_key = process.env.ONEBUS_KEY,
+  apiKey = process.env.ONEBUS_KEY || 'TEST',
   app = express();
 
-var proxyOneBusAway = function(request, response) {
-  console.log('Routing OneBusAway request for', request.params[0]);
-  (requestProxy({
-    url: 'http://api.pugetsound.onebusaway.org/api/' + request.params[0],
-  }))(request, response);
-};
+function proxyRequest(request, response) {
+  var url = 'http://api.pugetsound.onebusaway.org/api/'
+    + request.params[0].replace('TEST', '?key=' + apiKey);
 
-app.get('/oneBusAway/*', proxyOneBusAway);
+  superagent.get(url)
+  .end(function(error, res) {
+    console.log('Routed oneBusAway request for: ' + url);
+    response.json(res.text);
+  });
+}
+
+app.get('/oneBusAway/*', proxyRequest);
 
 app.use(express.static('./'));
 
 app.get('*', function(request, response) {
-  console.log('New request:', request.url);
+  console.log('New request: ', request.url);
   response.sendFile('index.html', { root: '.' });
 });
 
