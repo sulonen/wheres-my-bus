@@ -1,0 +1,65 @@
+body {
+  padding-top: 50px;
+}
+
+.navbar .nav li a {
+ color: #ddd;
+ font-size: 18px;
+}
+
+.container .navbar-header a.navbar-brand:hover, #navbar li a:hover {
+  color: #faac37;
+}
+
+.navbar .navbar-header a{
+ color: #fff;
+ font-size: 18px;
+}
+
+.navbar {
+color: white;
+padding-left: 15px;
+padding-right: 15px;
+letter-spacing: 2px;
+}
+
+.navbar-brand {
+  color: white;
+}
+
+.main-img {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("../img/King_County_Metro.jpg");
+  height: 500px;
+  width: auto;
+  background-size: 100% 100%;
+}
+
+.modal-header {
+  background: url("../img/bus-stop-sign.png");
+  height: 180px;
+  width: auto;
+  background-size: 100% 100%;
+}
+
+button.search {
+  background-color: #134334;
+  color: white;
+  border-radius: 5px;
+}
+
+button.search:hover {
+  color: #faac37;
+}
+
+input {
+  border-radius: 5px;
+}
+
+.bus-search {
+  font-weight: bolder;
+}
+
+.map {
+  padding: 40px 15px;
+  text-align: center;
+}
