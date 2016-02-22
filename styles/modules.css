@@ -60,6 +60,7 @@ input {
 }
 
 .map {
+  height: 300px;
   padding: 40px 15px;
   text-align: center;
 }

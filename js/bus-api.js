@@ -8,9 +8,10 @@
     $.get('/oneBusAway/where/stops-for-location.jsonTEST'
           + '&lat=' + stop.latitude
           + '&lon=' + stop.longitude
-          + '&radius=500')
+          + '&radius=200')
       .done(function(data, message, xhr) {
         stop.stopsData = JSON.parse(data);
+        stop.stopsList = stop.stopsData.data.list;
         if (callback) callback();
       })
       .fail(function(jqxhr, textStatus, error) {
@@ -26,6 +27,7 @@
     $.getJSON(url,
       function(data, message, xhr) {
         stop.arrivalsData = JSON.parse(data);
+        stop.arrivalsList = stop.arrivalsData.data.entry.arrivalsAndDepartures;
         if (callback) callback();
       });
   };

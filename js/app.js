@@ -18,10 +18,10 @@ function success(position) {
   output.html('<p>Latitude: ' + currentLocation.latitude
     + '°<br>Longitude: ' + currentLocation.longitude + '°</p>');
 
-  var map = new google.maps.Map(mapElement, currentLocation.mapOptions);
+  var myLocation = new google.maps.Map(mapElement, currentLocation.mapOptions);
 
   var marker = new google.maps.Marker({
-    map: map,
+    map: myLocation,
     position: currentLocation.position,
     title: 'Your location',
     icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
