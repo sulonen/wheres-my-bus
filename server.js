@@ -1,6 +1,5 @@
-var requestProxy = require('express-request-proxy'),
+var express = require('express'),
   superagent = require('superagent'),
-  express = require('express'),
   port = process.env.PORT || 3000,
   apiKey = process.env.ONEBUS_KEY || 'TEST',
   app = express();

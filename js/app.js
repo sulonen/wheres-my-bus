@@ -1,6 +1,7 @@
 var output = $('#output');
 var mapElement = $('#map').get(0);
 var stop = {};
+var test = {};
 
 if (!Location.checkAvailability) {
   output.html('<p>Geolocation is not supported by your browser</p>');
@@ -26,29 +27,28 @@ function success(position) {
     icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
   });
 
-  stop = new Stop(currentLocation.latitude, currentLocation.longitude);
+  stops = new Stops(currentLocation.latitude, currentLocation.longitude);
 
   // test ID provided for getArrivals testing
-  stop.stopID = '1_26698';
-  Stop.getStopData(stop, renderList);
-  Stop.getArrivals(stop, testArrivals);
+  stops.stopID = '1_26610';
+  Stops.getStopData(stops, renderList);
+  Stops.getArrivals(stops, testArrivals);
 }
 
 function renderList() {
-  var stopsRaw = stop.stopsData.data.list;
+  var stopsRaw = stops.stopsData.data.list;
   var stopsList = stopsRaw.map(function(element) {
     return element.id
     + ' (' + element.direction + '): '
     + element.name;
   });
-  console.log(stopsList);
   stopsList.forEach(function(element) {
     $('#stops').append('<li><a href=\"#\">' + element + '</a></li>');
   });
 }
 
 function testArrivals() {
-  console.log(stop.arrivalsData);
+  console.log(stops.arrivalsData.data.entry.arrivalsAndDepartures);
 }
 
 function error() {
@@ -56,5 +56,3 @@ function error() {
 };
 
 navigator.geolocation.getCurrentPosition(success, error);
-Status API Training Shop Blog About Pricing
-© 2016 GitHub, Inc. Terms Privacy Security Contact Help

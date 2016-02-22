@@ -14,13 +14,12 @@
     };
   }
 
-  Location.prototype.checkAvailability = function() {
+  Location.checkAvailability = function() {
     if (navigator.geolocation){
       return true;
     }
   };
 
   module.Location = Location;
-  module.Location.checkAvailability = Location.prototype.checkAvailability;
 
 })(window);

@@ -1,32 +1,34 @@
 (function(module) {
-  function Stop(latitude, longitude) {
+  function Stops(latitude, longitude) {
     this.latitude = latitude;
     this.longitude = longitude;
   };
 
-  Stop.prototype.getStopData = function(stop, callback) {
-    $.getJSON('/oneBusAway/where/stops-for-location.json?key=TEST'
-      + '&lat=' + stop.latitude
-      + '&lon=' + stop.longitude
-      + '&radius=100',
+  Stops.getStopData = function(stop, callback) {
+    $.get('/oneBusAway/where/stops-for-location.jsonTEST'
+          + '&lat=' + stop.latitude
+          + '&lon=' + stop.longitude
+          + '&radius=500')
+      .done(function(data, message, xhr) {
+        stop.stopsData = JSON.parse(data);
+        if (callback) callback();
+      })
+      .fail(function(jqxhr, textStatus, error) {
+        var err = textStatus + ', ' + error;
+        console.log('Request Failed: ' + err);
+      });
+  };
+
+  Stops.getArrivals = function(stop, callback) {
+    var url = '/oneBusAway/where/arrivals-and-departures-for-stop/'
+              + stop.stopID
+              + '.jsonTEST';
+    $.getJSON(url,
       function(data, message, xhr) {
-        stop.stopsData = data;
+        stop.arrivalsData = JSON.parse(data);
         if (callback) callback();
       });
   };
 
-  Stop.prototype.getArrivals = function(stop, callback) {
-    var api_url = '/where/arrivals-and-departures-for-stop/'
-                  + stop.stopID
-                  + '.xml?key=TEST';
-    $.getJSON(api_url,
-      function(data, message, xhr) {
-        stop.arrivalsData = data;
-        if (callback) callback();
-      });
-  };
-
-  module.Stop = Stop;
-  module.Stop.getStopData = Stop.prototype.getStopData;
-  module.Stop.getArrivals = Stop.prototype.getArrivals;
+  module.Stops = Stops;
 })(window);

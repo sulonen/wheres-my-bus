@@ -1,7 +1,6 @@
 {
   "name": "wheresmybus",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -19,6 +18,8 @@
   "homepage": "https://github.com/kyleschnirring/wheres-my-bus#readme",
   "dependencies": {
     "express": "^4.13.4",
-    "express-request-proxy": "^1.1.0"
-  }
+    "superagent": "^1.7.2"
+  },
+  "devDependencies": {},
+  "description": ""
 }
