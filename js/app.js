@@ -73,7 +73,6 @@ function renderArrivalsList() {
   $('#location').hide();
 
   stop.arrivalsList.forEach(function(element) {
-    console.log(element);
     var millisecondsAway = new Date(Date.now() - element.scheduledArrivalTime);
     var minutesAway = millisecondsAway.getMinutes();
     var tripLat = function() {
@@ -101,7 +100,7 @@ function renderArrivalsList() {
   $('#arrivals li').on('click', function(event) {
     event.preventDefault();
     clearStopMarkers();
-    var title = $(this).text();
+    var title = $(this).text() + '\nYour bus.';
     var latitude = parseFloat($(this).attr('lat')).toFixed(8);
     var longitude = parseFloat($(this).attr('lon')).toFixed(8);
     var position = {
@@ -113,7 +112,7 @@ function renderArrivalsList() {
       map: plotLocation,
       position: position,
       title: title,
-      icon: 'http://maps.google.com/mapfiles/ms/icons/ltblue-dot.png'
+      icon: 'http://maps.google.com/mapfiles/ms/icons/bus.png'
     });
 
     marker.addListener('click', function() {
