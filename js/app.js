@@ -6,6 +6,7 @@ if (!Location.checkAvailability) {
   output.html('<p>Geolocation is not supported by your browser</p>');
 } else {
   output.html('<p>Locating…</p>');
+  navigator.geolocation.getCurrentPosition(success, error);
 }
 
 function success(position) {
@@ -55,7 +56,6 @@ function testArrivals() {
   console.log(stop.arrivalsList);
 }
 
-navigator.geolocation.getCurrentPosition(success, error);
 
 
 // http://localhost:3000/oneBusAway/where/stops-for-location.jsonTEST&lat=47.6232869&lon=-122.3359755&radius=200
