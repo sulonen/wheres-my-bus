@@ -1,6 +1,6 @@
 var output = $('#output');
 var mapElement = $('#map').get(0);
-var currentLocation = {};
+var currentLocation;
 
 if (!Location.checkAvailability) {
   output.html('<p>Geolocation is not supported by your browser</p>');
@@ -11,22 +11,9 @@ if (!Location.checkAvailability) {
 function success(position) {
   currentLocation = new Location(
     position.coords.latitude,
-    position.coords.longitude
+    position.coords.longitude,
+    plot
   );
-
-  Location.getStops(currentLocation, console.log(currentLocation));
-
-  output.html('<p>Latitude: ' + currentLocation.latitude
-    + '°<br>Longitude: ' + currentLocation.longitude + '°</p>');
-
-  var plotLocation = new google.maps.Map(mapElement, currentLocation.mapOptions);
-
-  var marker = new google.maps.Marker({
-    map: plotLocation,
-    position: currentLocation.position,
-    title: 'Your location',
-    icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
-  });
 
   stop = new Stop('1_26610');
   Stop.getArrivals(stop, testArrivals);
@@ -36,17 +23,32 @@ function error() {
   output.html = '<p>Unable to retrieve your location</p>';
 }
 
-// function renderList(location) {
-//   var rawStops = location.stopsList;
-//   var stopsForLocation = rawStops.map(function(element) {
-//     return element.id
-//     + ' (' + element.direction + '): '
-//     + element.name;
-//   });
-//   stopsForLocation.forEach(function(element) {
-//     $('#stops').append('<li><a href=\"#\">' + element + '</a></li>');
-//   });
-// }
+var plot = function(location) {
+  output.html('<p>Latitude: ' + location.latitude
+    + '°<br>Longitude: ' + location.longitude + '°</p>');
+
+  var plotLocation = new google.maps.Map(mapElement, location.mapOptions);
+
+  var marker = new google.maps.Marker({
+    map: plotLocation,
+    position: location.position,
+    title: 'Your location',
+    icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+  });
+
+  renderList(location);
+};
+
+function renderList(location) {
+  var stopsForLocation = location.stopsList.map(function(element) {
+    return element.id
+    + ' (' + element.direction + '): '
+    + element.name;
+  });
+  stopsForLocation.forEach(function(element) {
+    $('#stops').append('<li><a href=\"#\">' + element + '</a></li>');
+  });
+}
 
 function testArrivals() {
   console.log('Test arrivals:');
