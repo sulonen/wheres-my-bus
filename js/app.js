@@ -27,36 +27,23 @@ function error() {
   output.html = '<p>Unable to retrieve your location</p>';
 }
 
-var plot = function(location, type) {
+var plot = function(location) {
   output.html('<p>Latitude: ' + location.latitude
     + '°<br>Longitude: ' + location.longitude + '°</p>');
 
-  if (!type) {
-    plotLocation = new google.maps.Map(mapElement, location.mapOptions);
-    marker = new google.maps.Marker({
-      map: plotLocation,
-      id: 'Your location',
-      position: location.position,
-      title: 'Your location',
-      icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
-    });
-    marker.addListener('click', function() {
-      plotLocation.setCenter(marker.getPosition());
-    });
-    renderStopsList(location);
-  } else if (type == 'bus') {
-    plotLocation = new google.maps.Map(mapElement, location.mapOptions);
-    marker = new google.maps.Marker({
-      map: plotLocation,
-      id: 'Bus location',
-      position: location.position,
-      title: 'Bus location',
-      icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
-    });
-    marker.addListener('click', function() {
-      plotLocation.setCenter(marker.getPosition());
-    });
-  }
+  plotLocation = new google.maps.Map(mapElement, location.mapOptions);
+  marker = new google.maps.Marker({
+    map: plotLocation,
+    id: 'Your location',
+    position: location.position,
+    title: 'Your location',
+    icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+  });
+  marker.addListener('click', function() {
+    plotLocation.setCenter(marker.getPosition());
+  });
+
+  renderStopsList(location);
 };
 
 function renderStopsList(location) {
