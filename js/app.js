@@ -1,6 +1,7 @@
 var output = $('#output');
 var mapElement = $('#map').get(0);
 var currentLocation;
+var plotLocation;
 
 if (!Location.checkAvailability) {
   output.html('<p>Geolocation is not supported by your browser</p>');
@@ -28,7 +29,7 @@ var plot = function(location) {
   output.html('<p>Latitude: ' + location.latitude
     + '°<br>Longitude: ' + location.longitude + '°</p>');
 
-  var plotLocation = new google.maps.Map(mapElement, location.mapOptions);
+  plotLocation = new google.maps.Map(mapElement, location.mapOptions);
 
   var marker = new google.maps.Marker({
     map: plotLocation,
@@ -41,7 +42,17 @@ var plot = function(location) {
 };
 
 function renderList(location) {
+  console.log(plotLocation);
   var stopsForLocation = location.stopsList.map(function(element) {
+    element.position = {lat: element.lat, lng: element.lon};
+    console.log(element);
+    new google.maps.Marker({
+      map: plotLocation,
+      position: element.position,
+      title: '(' + element.direction + ') '
+             + element.name,
+      icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+    });
     return element.id
     + ' (' + element.direction + '): '
     + element.name;
