@@ -2,6 +2,7 @@ var output = $('#output');
 var mapElement = $('#map').get(0);
 var currentLocation;
 var plotLocation;
+var stop = {};
 
 if (!Location.checkAvailability) {
   output.html('<p>Geolocation is not supported by your browser</p>');
@@ -16,9 +17,6 @@ function success(position) {
     position.coords.longitude,
     plot
   );
-
-  stop = new Stop('1_26610');
-  Stop.getArrivals(stop, testArrivals);
 }
 
 function error() {
@@ -33,38 +31,63 @@ var plot = function(location) {
 
   var marker = new google.maps.Marker({
     map: plotLocation,
+    id: 'Your location',
     position: location.position,
     title: 'Your location',
     icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+  });
+
+  marker.addListener('click', function() {
+    plotLocation.setCenter(marker.getPosition());
   });
 
   renderList(location);
 };
 
 function renderList(location) {
-  console.log(plotLocation);
   var stopsForLocation = location.stopsList.map(function(element) {
     element.position = {lat: element.lat, lng: element.lon};
-    console.log(element);
-    new google.maps.Marker({
+
+    var marker = new google.maps.Marker({
       map: plotLocation,
+      id: element.id,
       position: element.position,
       title: '(' + element.direction + ') '
              + element.name,
       icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
     });
-    return element.id
-    + ' (' + element.direction + '): '
-    + element.name;
+
+    marker.addListener('click', function() {
+      plotLocation.setCenter(marker.getPosition());
+      stop = new Stop(marker.id);
+      Stop.getArrivals(stop, renderArrivalsList);
+    });
   });
-  stopsForLocation.forEach(function(element) {
-    $('#stops').append('<li><a href=\"#\">' + element + '</a></li>');
+}
+
+function renderArrivalsList() {
+  $('#location').hide();
+
+  stop.arrivalsList.forEach(function(element) {
+    console.log(element);
+    var millisecondsAway = new Date(Date.now() - element.scheduledArrivalTime);
+    var minutesAway = millisecondsAway.getMinutes();
+    var arrivalEntry = '<li lat=\"' + element.tripStatus.lastKnownLocation.lat + '\"'
+                       + ' lon=\"' + element.tripStatus.lastKnownLocation.lon + '\">'
+                       + element.routeShortName
+                       + '  ' + element.tripHeadsign
+                       + '  <b>' + minutesAway + '</b></li>'
+    $('#arrivals > ul').append(arrivalEntry);
   });
 }
 
 function testArrivals() {
   console.log('Test arrivals:');
   console.log(stop.arrivalsList);
+}
+
+function combare(a, b) {
+  return a - b;
 }
 
 

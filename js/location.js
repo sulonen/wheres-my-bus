@@ -17,7 +17,7 @@
       };
       _this.mapCenter = new google.maps.LatLng(latitude, longitude);
       _this.mapOptions = {
-        zoom: 17,
+        zoom: 16,
         center: _this.mapCenter,
         mapTypeId : google.maps.MapTypeId.ROADMAP
       };

@@ -8,18 +8,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kyleschnirring/wheres-my-bus.git"
+    "url": "git+https://github.com/sulonen/wheres-my-bus.git"
   },
-  "author": "Kyle Schnirring <kyleschnirring@gmail.com> (http://noticedev.io)",
+  "author": "Kevin Sulonen <kevin.sulonen@gmail.com> (http://sulonen.codes)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/kyleschnirring/wheres-my-bus/issues"
+    "url": "https://github.com/sulonen/wheres-my-bus/issues"
   },
-  "homepage": "https://github.com/kyleschnirring/wheres-my-bus#readme",
+  "homepage": "https://github.com/sulonen/wheres-my-bus#readme",
   "dependencies": {
     "express": "^4.13.4",
     "superagent": "^1.7.2"
   },
   "devDependencies": {},
-  "description": ""
+  "description": "Code Fellows Code 301 - Final Project"
 }
