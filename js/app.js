@@ -26,7 +26,7 @@ function error() {
 
 var plot = function(location) {
   plotLocation = new google.maps.Map(mapElement, location.mapOptions);
-  marker = new google.maps.Marker({
+  var marker = new google.maps.Marker({
     map: plotLocation,
     id: 'Your location',
     position: location.position,
