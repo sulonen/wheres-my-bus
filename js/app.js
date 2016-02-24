@@ -1,4 +1,4 @@
-var output = $('#output');
+var message = $('#message');
 var mapElement = $('#map').get(0);
 var currentLocation;
 var plotLocation = {};
@@ -7,7 +7,7 @@ var stopMarkers = [];
 $('#arrivals').hide();
 
 if (!Location.checkAvailability) {
-  alert('Geolocation is not supported by your browser');
+  error();
 } else {
   navigator.geolocation.getCurrentPosition(success, error);
 }
@@ -21,7 +21,7 @@ function success(position) {
 }
 
 function error() {
-  output.html = '<p>Unable to retrieve your location</p>';
+  message.html = '<p>Unable to retrieve your location</p>';
 }
 
 var plot = function(location) {
