@@ -9,9 +9,8 @@ var stop = {};
 $('#arrivals').hide();
 
 if (!Location.checkAvailability) {
-  output.html('<p>Geolocation is not supported by your browser</p>');
+  alert('Geolocation is not supported by your browser');
 } else {
-  output.html('<p>Locating…</p>');
   navigator.geolocation.getCurrentPosition(success, error);
 }
 
