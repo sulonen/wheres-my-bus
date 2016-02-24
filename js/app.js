@@ -47,7 +47,7 @@ var plot = function(location) {
 };
 
 function renderStopsList(location) {
-  var stopsForLocation = location.stopsList.map(function(element) {
+  location.stopsList.map(function(element) {
     element.position = {lat: element.lat, lng: element.lon};
 
     marker = new google.maps.Marker({
@@ -94,35 +94,40 @@ function renderArrivalsList() {
                        + '<a href=\"#\">' + element.routeShortName
                        + '  ' + element.tripHeadsign
                        + '  <b>' + minutesAway + '</b></a></li>';
-    $('#arrivals > ul').append(arrivalEntry);
+    $('#arrivals ul').append(arrivalEntry);
   });
 
   $('#arrivals li').on('click', function(event) {
     event.preventDefault();
     clearStopMarkers();
-    var title = $(this).text() + '\nYour bus.';
-    var latitude = parseFloat($(this).attr('lat')).toFixed(8);
-    var longitude = parseFloat($(this).attr('lon')).toFixed(8);
-    var position = {
-      lat: parseFloat(latitude),
-      lng: parseFloat(longitude),
-    };
+    if ($(this).attr('lat') != 'unavailable') {
+      var title = $(this).text() + '\nYour bus.';
+      var latitude = parseFloat($(this).attr('lat')).toFixed(8);
+      var longitude = parseFloat($(this).attr('lon')).toFixed(8);
+      var position = {
+        lat: parseFloat(latitude),
+        lng: parseFloat(longitude),
+      };
 
-    marker = new google.maps.Marker({
-      map: plotLocation,
-      position: position,
-      title: title,
-      icon: 'http://maps.google.com/mapfiles/ms/icons/bus.png'
-    });
+      marker = new google.maps.Marker({
+        map: plotLocation,
+        position: position,
+        title: title,
+        icon: 'http://maps.google.com/mapfiles/ms/icons/bus.png'
+      });
 
-    marker.addListener('click', function() {
-      plotLocation.setCenter(currentLocation.position);
-    });
+      marker.addListener('click', function() {
+        plotLocation.setCenter(currentLocation.position);
+      });
 
-    plotLocation.setCenter(marker.getPosition());
+      plotLocation.setCenter(marker.getPosition());
 
-    $('#arrivals').hide();
-    $('#location').show();
+      $('#arrivals').hide();
+      $('#location').show();
+    } else {
+      console.log($(this).text());
+      $(this).text('No location data is available for this arrival.')
+    }
   });
 
   $('#arrivals').show();
