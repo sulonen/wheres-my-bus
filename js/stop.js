@@ -24,7 +24,7 @@
     .done(function(data, message, xhr) {
       stop.arrivalsData = JSON.parse(data);
       stop.arrivalsList = stop.arrivalsData.data.entry.arrivalsAndDepartures;
-      if (callback) callback();
+      if (callback) callback(stop);
     })
     .fail(function(jqxhr, textStatus, error) {
       var err = textStatus + ', ' + error;

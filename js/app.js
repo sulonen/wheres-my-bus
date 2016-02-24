@@ -3,8 +3,6 @@ var mapElement = $('#map').get(0);
 var currentLocation;
 var plotLocation = {};
 var stopMarkers = [];
-var marker = {};
-var stop = {};
 
 $('#arrivals').hide();
 
@@ -27,9 +25,6 @@ function error() {
 }
 
 var plot = function(location) {
-  output.html('<p>Latitude: ' + location.latitude
-    + '°<br>Longitude: ' + location.longitude + '°</p>');
-
   plotLocation = new google.maps.Map(mapElement, location.mapOptions);
   marker = new google.maps.Marker({
     map: plotLocation,
@@ -46,10 +41,10 @@ var plot = function(location) {
 };
 
 function renderStopsList(location) {
-  location.stopsList.map(function(element) {
+  var test = location.stopsList.map(function(element) {
     element.position = {lat: element.lat, lng: element.lon};
 
-    marker = new google.maps.Marker({
+    var marker = new google.maps.Marker({
       map: plotLocation,
       id: element.id,
       position: element.position,
@@ -58,17 +53,16 @@ function renderStopsList(location) {
       icon: 'http://maps.google.com/mapfiles/ms/icons/ltblue-dot.png'
     });
 
-    stopMarkers.push(marker);
-
     marker.addListener('click', function() {
-      plotLocation.setCenter(marker.getPosition());
-      stop = new Stop(marker.id);
+      var stop = new Stop(marker.id);
       Stop.getArrivals(stop, renderArrivalsList);
     });
+
+    stopMarkers.push(marker);
   });
 }
 
-function renderArrivalsList() {
+function renderArrivalsList(stop) {
   $('#location').hide();
 
   stop.arrivalsList.forEach(function(element) {
