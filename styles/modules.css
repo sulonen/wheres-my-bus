@@ -1,7 +1,17 @@
 body {
   padding-top: 50px;
 }
-
+figure {
+  display: table;
+}
+figcaption {
+  display: table-row;
+  text-align:center;
+}
+.gap-top {
+  margin-top: 8px;
+  margin-bottom: 5px;
+}
 .navbar .nav li a {
  color: #ddd;
  font-size: 18px;
@@ -29,9 +39,11 @@ letter-spacing: 2px;
 
 .main-img {
   background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("../img/King_County_Metro.jpg");
-  height: 500px;
+  height: 70vh;
   width: auto;
-  background-size: 100% 100%;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: top;
 }
 
 .modal-header {
@@ -63,4 +75,12 @@ input {
   height: 300px;
   padding: 40px 15px;
   text-align: center;
+}
+
+.footer {
+  /*position: absolute;
+  bottom: 0;*/
+  width: 100%;
+  height: 50px;
+  background-color: black;
 }
