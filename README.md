@@ -6,7 +6,7 @@
 * Kevin Sulonen
 
 #### This is a Code Fellows Code 301 Team Project
-Our aim is to provide a shorter UX path from King County Metro bus stop
+Our aim is to provide a shorter UX path from a King County Metro bus stop
 location to a visual representation of the location of an arriving vehicle.
 
 We are using the the [OneBusAway API](http://pugetsound.onebusaway.org/p/OneBusAwayApiService)

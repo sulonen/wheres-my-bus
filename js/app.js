@@ -1,12 +1,14 @@
-var output = $('#output');
+var message = $('#message');
 var mapElement = $('#map').get(0);
 var currentLocation;
-var plotLocation;
+var plotLocation = {};
+var stopMarkers = [];
+
+$('#arrivals').hide();
 
 if (!Location.checkAvailability) {
-  output.html('<p>Geolocation is not supported by your browser</p>');
+  error();
 } else {
-  output.html('<p>Locating…</p>');
   navigator.geolocation.getCurrentPosition(success, error);
 }
 
@@ -16,57 +18,116 @@ function success(position) {
     position.coords.longitude,
     plot
   );
-
-  stop = new Stop('1_26610');
-  Stop.getArrivals(stop, testArrivals);
 }
 
 function error() {
-  output.html = '<p>Unable to retrieve your location</p>';
+  message.html = '<p>Unable to retrieve your location</p>';
 }
 
 var plot = function(location) {
-  output.html('<p>Latitude: ' + location.latitude
-    + '°<br>Longitude: ' + location.longitude + '°</p>');
-
   plotLocation = new google.maps.Map(mapElement, location.mapOptions);
-
   var marker = new google.maps.Marker({
     map: plotLocation,
+    id: 'Your location',
     position: location.position,
     title: 'Your location',
     icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
   });
+  marker.addListener('click', function() {
+    plotLocation.setCenter(marker.getPosition());
+  });
 
-  renderList(location);
+  renderStopsList(location);
 };
 
-function renderList(location) {
-  console.log(plotLocation);
-  var stopsForLocation = location.stopsList.map(function(element) {
+function renderStopsList(location) {
+  var test = location.stopsList.map(function(element) {
     element.position = {lat: element.lat, lng: element.lon};
-    console.log(element);
-    new google.maps.Marker({
+
+    var marker = new google.maps.Marker({
       map: plotLocation,
+      id: element.id,
       position: element.position,
       title: '(' + element.direction + ') '
              + element.name,
-      icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+      icon: 'http://maps.google.com/mapfiles/ms/icons/ltblue-dot.png'
     });
-    return element.id
-    + ' (' + element.direction + '): '
-    + element.name;
-  });
-  stopsForLocation.forEach(function(element) {
-    $('#stops').append('<li><a href=\"#\">' + element + '</a></li>');
+
+    marker.addListener('click', function() {
+      var stop = new Stop(marker.id);
+      Stop.getArrivals(stop, renderArrivalsList);
+    });
+
+    stopMarkers.push(marker);
   });
 }
 
-function testArrivals() {
-  console.log('Test arrivals:');
-  console.log(stop.arrivalsList);
+function renderArrivalsList(stop) {
+  $('#location').hide();
+
+  stop.arrivalsList.forEach(function(element) {
+    var millisecondsAway = new Date(Date.now() - element.scheduledArrivalTime);
+    var minutesAway = millisecondsAway.getMinutes();
+    var tripLat = function() {
+      if (element.tripStatus.lastKnownLocation) {
+        return element.tripStatus.lastKnownLocation.lat;
+      } else {
+        return 'unavailable';
+      }
+    };
+    var tripLon = function() {
+      if (element.tripStatus.lastKnownLocation) {
+        return element.tripStatus.lastKnownLocation.lon;
+      } else {
+        return 'unavailable';
+      }
+    };
+    var arrivalEntry = '<li lat=\"' + tripLat() + '\"'
+                       + ' lon=\"' + tripLon() + '\">'
+                       + '<a href=\"#\">' + element.routeShortName
+                       + '  ' + element.tripHeadsign
+                       + '  <b>' + minutesAway + '</b></a></li>';
+    $('#arrivals ul').append(arrivalEntry);
+  });
+
+  $('#arrivals li').on('click', function(event) {
+    event.preventDefault();
+    clearStopMarkers();
+    if ($(this).attr('lat') != 'unavailable') {
+      var title = $(this).text() + '\nYour bus.';
+      var latitude = parseFloat($(this).attr('lat')).toFixed(8);
+      var longitude = parseFloat($(this).attr('lon')).toFixed(8);
+      var position = {
+        lat: parseFloat(latitude),
+        lng: parseFloat(longitude),
+      };
+
+      marker = new google.maps.Marker({
+        map: plotLocation,
+        position: position,
+        title: title,
+        icon: 'http://maps.google.com/mapfiles/ms/icons/bus.png'
+      });
+
+      marker.addListener('click', function() {
+        plotLocation.setCenter(currentLocation.position);
+      });
+
+      plotLocation.setCenter(marker.getPosition());
+
+      $('#arrivals').hide();
+      $('#location').show();
+    } else {
+      console.log($(this).text());
+      $(this).text('No location data is available for this arrival.')
+    }
+  });
+
+  $('#arrivals').show();
 }
 
-
-
-// http://localhost:3000/oneBusAway/where/stops-for-location.jsonTEST&lat=47.6232869&lon=-122.3359755&radius=200
+function clearStopMarkers() {
+  stopMarkers.forEach(function(marker) {
+    marker.setMap(null);
+  });
+}

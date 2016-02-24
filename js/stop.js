@@ -22,10 +22,9 @@
               + '.jsonTEST';
     $.get(url)
     .done(function(data, message, xhr) {
-      console.log(stop);
       stop.arrivalsData = JSON.parse(data);
       stop.arrivalsList = stop.arrivalsData.data.entry.arrivalsAndDepartures;
-      if (callback) callback();
+      if (callback) callback(stop);
     })
     .fail(function(jqxhr, textStatus, error) {
       var err = textStatus + ', ' + error;
