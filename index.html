@@ -23,7 +23,9 @@
 
   <body>
     <header>
-      <div class="main-img container-fluid"></div>
+      <div class="jumbotron">
+      </div>
+
       <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
           <div class="navbar-header">
@@ -37,8 +39,8 @@
           </div>
           <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
+              <li class="active"><a href="/">Home</a></li>
+              <li><a href="/about">About</a></li>
               <li><a href="#contact">Contact</a></li>
             </ul>
           </div><!--/.nav-collapse -->
@@ -46,7 +48,8 @@
       </nav>
     </header>
     <main>
-      <section>
+
+      <section id="request">
         <div id="message"></div>
         <div id="searchBtn">
           <button id="stopSearchBtn" class="search" type="button">Search by stop number</button> &nbsp;
@@ -89,16 +92,17 @@
           </div>
         </div>
       </section>
+      <br>
       <section id="location">
         <div id="map" class="map"></div>
       </section>
       <br>
 
-      <section>
-        <div class="about container">
-          <h1 class="text-center">Where's My Bus?</h1>
+      <section id="about">
+        <div class="container">
+          <h1 class="text-center">WHERE'S MY BUS?</h1>
           <h3>Code Fellows 301 Team Project</h3>
-          <p>Our aim is to provide a shorter UX path from King County Metro bus stop location to a visual representation of the location of an arriving vehicle.
+          <p>We aim to provide a short UX path from a King County Metro bus stop location to a visual representation of the current location of an inbound vehicle.
           </p>
           <p>We are using the <a href="http://pugetsound.onebusaway.org/p/OneBusAwayApiService">OneBusAway API</a> in conjunction with <a href="https://developers.google.com/maps/web/">Google Maps API</a> to access and manipulate real-time data.
           </p>
@@ -133,9 +137,9 @@
       </section>
     </main>
     <br>
-    <footer class=footer>
+    <footer class="footer">
       <div class="container">
-        <p class="text-muted">test text for footer</p>
+        <p class="text-muted">WHERE'S MY BUS? | Real-Time Transit Information</p>
       </div>
     </footer>
 
@@ -146,8 +150,12 @@
     <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
     <script src="http://maps.googleapis.com/maps/api/js"></script>
     <script src="vendor/js/bootstrap.min.js"></script>
+    <script src="vendor/js/page.js"></script>
     <script type="text/javascript" src="js/location.js"></script>
     <script type="text/javascript" src="js/stop.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/homeController.js"></script>
+    <script type="text/javascript" src="js/aboutController.js"></script>
+    <script type="text/javascript" src="js/routes.js"></script>
   </body>
 </html>
