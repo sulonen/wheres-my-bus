@@ -4,8 +4,6 @@ var currentLocation;
 var plotLocation = {};
 var stopMarkers = [];
 
-$('#arrivals').hide();
-
 if (!Location.checkAvailability) {
   error();
 } else {
@@ -54,6 +52,7 @@ function renderStopsList(location) {
     });
 
     marker.addListener('click', function() {
+      $('#arrivalsModal').modal('show');
       var stop = new Stop(marker.id);
       Stop.getArrivals(stop, renderArrivalsList);
     });
@@ -63,7 +62,9 @@ function renderStopsList(location) {
 }
 
 function renderArrivalsList(stop) {
-  $('#location').hide();
+  //$('#location').hide();
+  $('#arrivalsTable tbody').empty();
+  $('#arrivalsModal').modal('show');
 
   stop.arrivalsList.forEach(function(element) {
     var millisecondsAway = new Date(Date.now() - element.scheduledArrivalTime);
@@ -82,15 +83,16 @@ function renderArrivalsList(stop) {
         return 'unavailable';
       }
     };
-    var arrivalEntry = '<li lat=\"' + tripLat() + '\"'
+    var arrivalEntry = '<tr><td>' + element.routeShortName + '</td>'
+                       +'<td lat=\"' + tripLat() + '\"'
                        + ' lon=\"' + tripLon() + '\">'
-                       + '<a href=\"#\">' + element.routeShortName
-                       + '  ' + element.tripHeadsign
-                       + '  <b>' + minutesAway + '</b></a></li>';
-    $('#arrivals ul').append(arrivalEntry);
+                       + '<a href=\"#\">' + element.tripHeadsign
+                       + '</a></td><td>' + minutesAway + '</td>';
+
+    $('#arrivalsTable tbody').append(arrivalEntry);
   });
 
-  $('#arrivals li').on('click', function(event) {
+  $('#arrivalsTable td').on('click', function(event) {
     event.preventDefault();
     clearStopMarkers();
     if ($(this).attr('lat') != 'unavailable') {
@@ -115,16 +117,20 @@ function renderArrivalsList(stop) {
 
       plotLocation.setCenter(marker.getPosition());
 
-      $('#arrivals').hide();
+      $('#arrivalsModal').modal('hide');
+      //$('#arrivals').hide();
       $('#location').show();
     } else {
       console.log($(this).text());
-      $(this).text('No location data is available for this arrival.')
+      $(this).text('No location data is available for this arrival.');
     }
   });
-
-  $('#arrivals').show();
 }
+
+$('#stopSearchBtn').on('click', function() {
+  var stopSearchId = {stopID:'1_' + $('#stopId').val()};
+  Stop.getArrivals(stopSearchId, renderArrivalsList);
+});
 
 function clearStopMarkers() {
   stopMarkers.forEach(function(marker) {

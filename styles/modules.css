@@ -101,3 +101,27 @@ figcaption {
     padding: 10px;
   }
 }
+
+.modal-body {
+  text-align: center;
+}
+
+th, td {
+  text-align: center;
+  padding: .5em 0;
+}
+
+th {
+  border-bottom: 1px solid #ddd;
+}
+
+.destination {
+  width: 90%;
+}
+
+#searchBtn {
+  position: absolute;
+  float: left;
+  margin: -3em 4.4em;
+  z-index: 1;
+}

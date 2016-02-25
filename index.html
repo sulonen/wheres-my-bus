@@ -35,7 +35,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#google-map">WHERE'S MY BUS</a>
+            <a class="navbar-brand" href=".\">WHERE'S MY BUS</a>
           </div>
           <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -48,16 +48,18 @@
       </nav>
     </header>
     <main>
-      <section id="request">
-        <div class="container">
-          <!-- Trigger the modal with a button -->
-          <!-- </br> -->
 
-          <div id="message"></div>
-          <button type="button" class="btn-md search" data-toggle="modal" data-target="#myModal">Search Stop or Route number</button>
+      <section id="request">
+        <div id="message"></div>
+        <div id="searchBtn">
+          <button id="stopSearchBtn" class="search" type="button">Search by stop number</button> &nbsp;
+          <input id="stopId" type="text">
+        </div>
+
+        <div class="container">
 
           <!-- Modal -->
-          <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal fade" id="arrivalsModal" role="dialog">
             <div class="modal-dialog">
 
               <!-- Modal content-->
@@ -65,14 +67,23 @@
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
+
                 <div class="modal-body">
-                  <h4>You can search for stops by number or click on the stop you're interested in on the map below.</h4>
-                  <form>
-                    <p class="bus-search">Search by stop number: &nbsp;
-                      <input type="text" name="stop-number">
-                    </p>
-                  </form>
+                  <h4>Where's My Bus?</h4>
+                  <p>Click on destination to get bus last known location.</p>
+                  <table id="arrivalsTable">
+                    <thead>
+                      <tr>
+                        <th>Route</th>
+                        <th class="destination">Destination</th>
+                        <th>Minutes</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
                 </div>
+
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
@@ -86,10 +97,7 @@
         <div id="map" class="map"></div>
       </section>
       <br>
-      <section id="arrivals">
-        <h4>Arrivals for stop:</h4>
-        <ul></ul>
-      </section>
+
       <section id="about">
         <div class="container">
           <h1 class="text-center">WHERE'S MY BUS?</h1>
