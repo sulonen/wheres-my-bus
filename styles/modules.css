@@ -36,27 +36,14 @@ letter-spacing: 2px;
   padding: 20px;
   margin-bottom: 0px;
 }
+
 @media(max-width:48em){
   .jumbotron {
     height:30vh;
     padding: 10px;
   }
 }
-/*.jumbotron {
-  background-image: url("../img/King_County_Metro.JPG");
-  height:auto;
-}*/
-.bus {
-  max-width: 100%;
-  height: auto;
-  background-size: cover;
-}
-.background {
-  background-color: #134334;
-}
-.container-fluid {
-  padding: 0px;
-}
+
 .modal-header {
   background: url("../img/bus-stop-sign.png");
   height: 180px;
@@ -92,10 +79,12 @@ input {
 figure {
   display: table;
 }
+
 figcaption {
   display: table-row;
   text-align:center;
 }
+
 .gap-top {
   margin-top: 8px;
   margin-bottom: 5px;
