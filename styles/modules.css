@@ -27,23 +27,6 @@ letter-spacing: 2px;
   color: white;
 }
 
-.jumbotron {
-  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("../img/King_County_Metro.jpg");
-  height: 60vh;
-  width: 100%;
-  background-size: 100%;
-  background-repeat: no-repeat;
-  padding: 20px;
-  margin-bottom: 0px;
-}
-
-@media(max-width:48em){
-  .jumbotron {
-    height:30vh;
-    padding: 10px;
-  }
-}
-
 .modal-header {
   background: url("../img/bus-stop-sign.png");
   height: 180px;
@@ -100,4 +83,21 @@ figcaption {
   text-align: center;
   vertical-align: middle;
   line-height: 50px;
+}
+
+.jumbotron {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("../img/King_County_Metro.jpg");
+  height: 60vh;
+  width: 100%;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  padding: 20px;
+  margin-bottom: 0px;
+}
+
+@media(max-width:48em){
+  .jumbotron {
+    height:30vh;
+    padding: 10px;
+  }
 }
